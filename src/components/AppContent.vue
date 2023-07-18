@@ -10,7 +10,8 @@ export default {
             api:"http://localhost:8000/api/",
             loading: false,
             projects: [],
-            pageProject: 0,
+            currentPage: 0,
+            totalPages: 0,
 
 
         }
@@ -22,7 +23,9 @@ export default {
             axios.get(this.api + "projects").then(response=>{
                 this.projects = response.data.results.data
                 console.log(response);
-                this.pageProject = response.data.results.current_page;
+                this.currentPage = response.data.results.current_page;
+                this.totalPages = response.data.results.last_page
+
 
 
             this.loading = false;
@@ -33,14 +36,30 @@ export default {
 
             let config ={
                 params:{
-                    page: 2
+                    page: (this.currentPage +1)
                 }
             }
 
             axios.get(this.api + "projects", config).then(response=>{
             this.projects = response.data.results.data
+            this.currentPage = response.data.results.current_page;
            
          })
+        },
+        previousProject(){
+            console.log("next");
+
+            let config = {
+                params: {
+                    page: (this.currentPage - 1)
+                }
+            }
+
+            axios.get(this.api + "projects", config).then(response => {
+                this.projects = response.data.results.data
+                this.currentPage = response.data.results.current_page;
+
+            })
         }
     },
     mounted(){
@@ -53,6 +72,7 @@ export default {
 <template>
     <h1>Progetti</h1>
     <h3 v-if="loading">Caricamento in corso</h3>
+    <h3>Projects {{ currentPage }} - {{ totalPages }}</h3>
 
     <div class="container-fluid mt-4">
         <div class="row justify-content-between" >
@@ -70,6 +90,7 @@ export default {
             </div>
         </div>
     </div>
+    <a class="button" @click="previousProject()">Pagina Precedente</a>
     <a class="button" @click="nextProject()">Pagina Successiva</a>
 
 </template>
@@ -81,6 +102,7 @@ export default {
     border-radius:5px ;
     padding: 1rem;
     cursor: pointer;
+    margin-right: 10px;
 }
 
 </style>
