@@ -1,12 +1,12 @@
 <script >
 //Importiamo i componenti da usare
 import AppContent from './components/AppContent.vue'
-
-import axios from "axios";
+import AppHeader from './components/AppHeader.vue'
 
 export default {
   components: {
     AppContent,
+    AppHeader,
   },
   data(){
     return{
@@ -20,11 +20,20 @@ export default {
 </script>
 
 <template>
-  <main>
-    <!-- Usiamo i componenti importati sopra -->
-    <AppContent />
-  </main>
+
+    <header>
+      <AppHeader />
+    </header>
+
+    <router-view></router-view>
+  
+    <!-- <main>
+      <AppContent />
+    </main> -->
+
 </template>
+
+
 
 <style scoped>
 
