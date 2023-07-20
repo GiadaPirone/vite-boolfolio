@@ -4,8 +4,13 @@ export default {
 
     data(){
         return{
+            navLinks:[
+                {label: "Home", name: "home"},
+                {label: "Progetti", name: "progetti"},
+            ]
         }
     },
+
 }
 
 </script>
@@ -21,24 +26,10 @@ export default {
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
 
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/progetti">Progetti</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
-                    </li>
-                </ul>
+                <template v-for="i in navLinks">
+                     <router-link :to="{ name: i.name, params: i.params }">{{ i.label }}</router-link>
+                </template>
             </div>
         </div>
     </nav>
